@@ -63,12 +63,16 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`🎓 Eduquest Educational AI Chatbot está en ejecución`);
-  console.log(`🚀 Servidor local: http://localhost:${PORT}`);
-  console.log(`🤖 Modelo Gemini configurado: ${process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite'}`);
-  console.log(`🔑 Estado de la API Key: ${Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY') ? 'Configurada ✅' : 'Pendiente en .env ⚠️'}`);
-  console.log(`====================================================`);
-});
+// Start the server if not running in a serverless environment like Vercel
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(`🎓 Eduquest Educational AI Chatbot está en ejecución`);
+    console.log(`🚀 Servidor local: http://localhost:${PORT}`);
+    console.log(`🤖 Modelo Gemini configurado: ${process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite'}`);
+    console.log(`🔑 Estado de la API Key: ${Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY') ? 'Configurada ✅' : 'Pendiente en .env ⚠️'}`);
+    console.log(`====================================================`);
+  });
+}
+
+module.exports = app;
