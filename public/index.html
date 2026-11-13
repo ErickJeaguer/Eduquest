@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eduquest | Tutor Educativo Inteligente</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Marked.js for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Highlight.js for code syntax highlighting in educational explanations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Background Decorative Shapes -->
+  <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-container d-flex flex-column">
+
+    <!-- Top Navigation / Application Header -->
+    <header class="app-header py-3 px-4 border-bottom">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        
+        <!-- Logo & Tutor Identity -->
+        <div class="d-flex align-items-center gap-3">
+          <div class="brand-avatar-wrapper position-relative">
+            <div class="brand-avatar d-flex align-items-center justify-content-center">
+              <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <span class="status-indicator-dot position-absolute" title="En línea"></span>
+          </div>
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <h1 class="brand-title mb-0">Eduquest</h1>
+              <span class="badge badge-ai-version">AI Tutor</span>
+            </div>
+            <p class="brand-subtitle mb-0">Tu tutor pedagógico impulsado por Gemini</p>
+          </div>
+        </div>
+
+        <!-- Header Actions -->
+        <div class="d-flex align-items-center gap-2">
+          <!-- Clear Chat Button -->
+          <button id="btnClearChat" class="btn btn-outline-custom btn-sm d-flex align-items-center gap-2" title="Limpiar conversación">
+            <i class="bi bi-trash3"></i>
+            <span class="d-none d-md-inline">Nueva conversación</span>
+          </button>
+
+          <!-- Help / Info Button -->
+          <button class="btn btn-outline-custom btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal" title="Acerca de Eduquest">
+            <i class="bi bi-info-circle"></i>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Chat Workspace -->
+    <main class="chat-workspace flex-grow-1 d-flex flex-column overflow-hidden position-relative">
+      
+      <!-- Messages Scroll Area -->
+      <div id="chatMessages" class="chat-messages-container flex-grow-1 p-3 p-md-4 overflow-y-auto">
+        
+        <!-- Welcome Hero Banner (Displayed when history is empty) -->
+        <div id="welcomeBanner" class="welcome-banner text-center mx-auto my-auto p-4 p-md-5">
+          <div class="welcome-icon-box mx-auto mb-3">
+            <i class="bi bi-stars"></i>
+          </div>
+          <h2 class="welcome-title mb-2">¡Hola! Soy Eduquest</h2>
+          <p class="welcome-text mx-auto mb-4">
+            Estoy aquí para ayudarte a comprender conceptos, resolver ejercicios paso a paso y explorar cualquier área del conocimiento. ¿Qué te gustaría aprender hoy?
+          </p>
+
+          <!-- Quick Starter Prompts -->
+          <div class="suggestion-chips-grid">
+            <button class="suggestion-chip" data-prompt="¿Me explicas el Teorema de Pitágoras con un ejemplo de la vida real?">
+              <span class="chip-icon"><i class="bi bi-calculator"></i></span>
+              <span class="chip-text">Teorema de Pitágoras paso a paso</span>
+            </button>
+            <button class="suggestion-chip" data-prompt="¿Cómo funciona la fotosíntesis en las plantas y por qué es vital para la Tierra?">
+              <span class="chip-icon"><i class="bi bi-tree"></i></span>
+              <span class="chip-text">¿Cómo funciona la fotosíntesis?</span>
+            </button>
+            <button class="suggestion-chip" data-prompt="¿Cuáles fueron las causas principales de la Revolución Francesa resumidas con claridad?">
+              <span class="chip-icon"><i class="bi bi-hourglass-split"></i></span>
+              <span class="chip-text">Causas de la Revolución Francesa</span>
+            </button>
+            <button class="suggestion-chip" data-prompt="Explícame qué es una función recursiva en programación usando una analogía sencilla.">
+              <span class="chip-icon"><i class="bi bi-code-slash"></i></span>
+              <span class="chip-text">Funciones recursivas en código</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Conversation Messages will be rendered here by app.js -->
+
+        <!-- Typing Indicator (Hidden by default) -->
+        <div id="typingIndicator" class="typing-indicator-wrapper d-none">
+          <div class="message-row assistant-row d-flex align-items-start gap-2 gap-md-3">
+            <div class="message-avatar assistant-avatar flex-shrink-0">
+              <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <div class="typing-bubble p-3">
+              <div class="d-flex align-items-center gap-2">
+                <div class="typing-dots d-flex gap-1">
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+                <span class="typing-label">Eduquest está formulando una explicación...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Topics Bar (Above Input) -->
+      <div class="quick-topics-bar px-3 px-md-4 py-2 border-top bg-surface-subtle d-flex align-items-center gap-2 overflow-x-auto">
+        <span class="quick-topics-label text-muted d-none d-sm-inline-flex align-items-center gap-1 flex-shrink-0">
+          <i class="bi bi-lightbulb"></i> Sugerencias:
+        </span>
+        <button class="btn btn-quick-pill" data-prompt="Guíame para resolver un problema de álgebra paso a paso">
+          Álgebra
+        </button>
+        <button class="btn btn-quick-pill" data-prompt="Explícame las leyes del movimiento de Newton">
+          Física Newtoniana
+        </button>
+        <button class="btn btn-quick-pill" data-prompt="Consejos de técnicas de estudio activas y pomodoro">
+          Métodos de estudio
+        </button>
+        <button class="btn btn-quick-pill" data-prompt="¿Cuál es la diferencia entre mitosis y meiosis?">
+          Biología celular
+        </button>
+      </div>
+
+      <!-- Chat Composer (Input Area) -->
+      <div class="chat-composer-area p-3 p-md-4 border-top">
+        <form id="chatForm" class="composer-form position-relative">
+          <div class="composer-container d-flex align-items-end gap-2">
+            
+            <div class="textarea-wrapper flex-grow-1 position-relative">
+              <textarea 
+                id="messageInput" 
+                class="form-control message-textarea" 
+                placeholder="Escribe tu pregunta educativa aquí... (Shift + Enter para salto de línea)" 
+                rows="1"
+                maxlength="2000"
+                required
+              ></textarea>
+              <div class="character-counter text-muted">
+                <span id="charCount">0</span>/2000
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="btnSend" type="submit" class="btn btn-send-action" title="Enviar mensaje">
+              <i class="bi bi-send-fill btn-icon-normal"></i>
+              <span class="spinner-border spinner-border-sm btn-icon-loading d-none" role="status" aria-hidden="true"></span>
+            </button>
+
+          </div>
+
+          <div class="composer-footer mt-2 d-flex justify-content-between align-items-center px-1">
+            <span class="disclaimer-text text-muted">
+              <i class="bi bi-shield-check text-success me-1"></i>Eduquest está diseñado exclusivamente para el aprendizaje y la educación.
+            </span>
+          </div>
+        </form>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Information & Help Modal -->
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content custom-modal">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title d-flex align-items-center gap-2" id="infoModalLabel">
+            <span class="modal-icon-badge"><i class="bi bi-mortarboard-fill"></i></span>
+            Acerca de Eduquest
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-toggle="modal" data-bs-target="#infoModal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body py-4">
+          <p class="modal-description">
+            <strong>Eduquest</strong> es un chatbot educativo inteligente con arquitectura cliente-servidor construida con Node.js, Express y la API oficial de Google Gemini (<code>@google/genai</code>).
+          </p>
+          <div class="modal-feature-list">
+            <div class="feature-item d-flex gap-3 mb-3">
+              <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+              <div>
+                <strong>Tutoría Socrática</strong>
+                <p class="mb-0 text-muted small">Te guia paso a paso para que comprendas la raíz de los problemas.</p>
+              </div>
+            </div>
+            <div class="feature-item d-flex gap-3 mb-3">
+              <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+              <div>
+                <strong>Enfoque Estrictamente Educativo</strong>
+                <p class="mb-0 text-muted small">Protegido por directivas del sistema en el backend para mantener el rigor pedagógico.</p>
+              </div>
+            </div>
+            <div class="feature-item d-flex gap-3">
+              <i class="bi bi-check-circle-fill text-primary mt-1"></i>
+              <div>
+                <strong>Seguridad y Privacidad</strong>
+                <p class="mb-0 text-muted small">Tus claves de API residen de forma segura en el servidor y nunca se exponen al navegador.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-primary-custom w-100" data-bs-dismiss="modal">¡Entendido!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear History Confirmation Modal -->
+  <div class="modal fade" id="confirmClearModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content custom-modal text-center p-3">
+        <div class="modal-body">
+          <div class="warning-icon-box mx-auto mb-3">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+          <h5 class="mb-2">¿Limpiar conversación?</h5>
+          <p class="text-muted small mb-4">Se borrará el historial de la conversación actual de tu navegador.</p>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-custom flex-fill" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" id="btnConfirmClear" class="btn btn-danger flex-fill">Limpiar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container for Alerts -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="notificationToast" class="toast custom-toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i id="toastIcon" class="bi bi-info-circle-fill"></i>
+          <span id="toastMessage">Notificación</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5.3 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- Application Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
