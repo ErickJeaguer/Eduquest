@@ -7,7 +7,7 @@ const { EDUCATIONAL_SYSTEM_PROMPT } = require('../prompts/educationalSystemPromp
 class GeminiService {
   constructor() {
     this.apiKey = process.env.GEMINI_API_KEY;
-    this.modelName = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+    this.modelName = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
     this.client = null;
 
     if (this.isApiKeyConfigured()) {
@@ -34,7 +34,7 @@ class GeminiService {
     const currentKey = process.env.GEMINI_API_KEY;
     if (!this.client || currentKey !== this.apiKey) {
       this.apiKey = currentKey;
-      this.modelName = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+      this.modelName = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
       if (this.isApiKeyConfigured()) {
         this.client = new GoogleGenAI({ apiKey: this.apiKey });
       } else {

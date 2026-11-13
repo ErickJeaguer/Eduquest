@@ -36,7 +36,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     service: 'Eduquest AI Chatbot API',
-    model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+    model: process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite',
     apiKeyConfigured: Boolean(
       process.env.GEMINI_API_KEY &&
       process.env.GEMINI_API_KEY.trim() !== '' &&
@@ -68,7 +68,7 @@ app.listen(PORT, () => {
   console.log(`====================================================`);
   console.log(`🎓 Eduquest Educational AI Chatbot está en ejecución`);
   console.log(`🚀 Servidor local: http://localhost:${PORT}`);
-  console.log(`🤖 Modelo Gemini configurado: ${process.env.GEMINI_MODEL || 'gemini-2.5-flash'}`);
+  console.log(`🤖 Modelo Gemini configurado: ${process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite'}`);
   console.log(`🔑 Estado de la API Key: ${Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'YOUR_GEMINI_API_KEY') ? 'Configurada ✅' : 'Pendiente en .env ⚠️'}`);
   console.log(`====================================================`);
 });
