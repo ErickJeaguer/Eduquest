@@ -460,4 +460,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load existing conversation from localStorage
   loadConversation();
   checkServerHealth();
+
+  // Fix mobile viewport height (100dvh fallback for older browsers)
+  function setMobileVH() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // Also force app-container height on browsers that don't support dvh
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+      appContainer.style.height = `${window.innerHeight}px`;
+    }
+  }
+  setMobileVH();
+  window.addEventListener('resize', setMobileVH);
+  window.addEventListener('orientationchange', () => setTimeout(setMobileVH, 200));
 });

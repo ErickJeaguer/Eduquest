@@ -685,14 +685,204 @@ body {
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+/* ============================================================
+   RESPONSIVE — MOBILE FIRST CORRECTIONS
+   ============================================================ */
+
+/* Respect safe areas on modern mobile browsers (notch, home bar) */
+.app-container {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+@media (max-width: 576px) {
+  /* ---- Layout ---- */
   .app-container {
     border: none;
+    height: 100dvh; /* use dynamic viewport height to avoid address-bar issues */
+  }
+
+  /* ---- Header: compact single-line on mobile ---- */
+  .app-header {
+    padding: 0.6rem 0.85rem !important;
+  }
+
+  .brand-avatar-wrapper {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .brand-avatar {
+    font-size: 1.05rem;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+  }
+
+  /* Hide subtitle on very small screens to keep header compact */
+  .brand-subtitle {
+    display: none;
+  }
+
+  .btn-outline-custom {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  /* ---- Welcome Banner ---- */
+  .welcome-banner {
+    padding: 1rem !important;
+    margin-top: 0.5rem;
+  }
+
+  .welcome-icon-box {
+    width: 46px;
+    height: 46px;
+    font-size: 1.35rem;
+    margin-bottom: 0.6rem !important;
+  }
+
+  .welcome-title {
+    font-size: 1.25rem;
+  }
+
+  .welcome-text {
+    font-size: 0.85rem;
+    margin-bottom: 1rem !important;
+  }
+
+  .suggestion-chips-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .suggestion-chip {
+    padding: 0.65rem 0.8rem;
+    border-radius: 12px;
+  }
+
+  .chip-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  .chip-text {
+    font-size: 0.82rem;
+  }
+
+  /* ---- Quick Topics Bar ---- */
+  .quick-topics-bar {
+    padding: 0.4rem 0.75rem !important;
+  }
+
+  .btn-quick-pill {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  /* ---- Messages ---- */
+  .chat-messages-container {
+    gap: 0.9rem;
+    padding: 0.75rem !important;
+  }
+
+  .message-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    flex-shrink: 0;
   }
 
   .user-bubble {
-    max-width: 90%;
+    max-width: 88%;
+    font-size: 0.88rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .assistant-bubble {
+    max-width: 94%;
+    font-size: 0.88rem;
+    padding: 0.8rem 0.9rem;
+    line-height: 1.6;
+  }
+
+  .assistant-bubble pre {
+    font-size: 0.78rem;
+  }
+
+  /* ---- Composer ---- */
+  .chat-composer-area {
+    padding: 0.6rem 0.75rem !important;
+    padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0)) !important;
+  }
+
+  .composer-container {
+    padding: 0.3rem 0.5rem;
+    border-radius: 14px;
+  }
+
+  .message-textarea {
+    font-size: 0.88rem !important;
+    padding: 0.35rem 0.4rem;
+  }
+
+  /* Shorten placeholder on mobile to avoid wrapping */
+  .message-textarea::placeholder {
+    font-size: 0.82rem;
+  }
+
+  .btn-send-action {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
+  /* Hide disclaimer text on mobile to save space */
+  .composer-footer {
+    display: none !important;
+  }
+
+  /* Character counter: move it inline, not floating below */
+  .character-counter {
+    position: static;
+    font-size: 0.65rem;
+    text-align: right;
+    padding-right: 0.3rem;
+    margin-top: 0.1rem;
+    display: block;
+  }
+
+  /* ---- Modals: full-width on mobile ---- */
+  .custom-modal {
+    border-radius: var(--radius-md);
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .app-container {
+    border: none;
+    height: 100dvh;
+  }
+
+  .brand-subtitle {
+    font-size: 0.72rem;
+  }
+
+  .welcome-title {
+    font-size: 1.35rem;
+  }
+
+  .suggestion-chips-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .user-bubble {
+    max-width: 88%;
   }
 
   .assistant-bubble {
@@ -700,15 +890,7 @@ body {
     padding: 0.9rem 1rem;
   }
 
-  .welcome-title {
-    font-size: 1.4rem;
-  }
-
-  .suggestion-chips-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .brand-title {
-    font-size: 1.1rem;
+  .composer-footer {
+    display: none !important;
   }
 }
